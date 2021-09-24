@@ -15,3 +15,5 @@ send it to your insecure device and and then send it to the recipient.
 
 If you use audio be carefull not to be near to your insecure mobile phone, because it will be meaningless to encrypt the
 message if they can hear you anyway.
+
+Hope this helps
