@@ -10,6 +10,12 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -552,20 +558,33 @@
         <x>20</x>
         <y>40</y>
         <width>120</width>
-        <height>120</height>
+        <height>80</height>
        </rect>
       </property>
       <property name="text">
        <string>Serial</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="setOffButn">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>240</y>
+        <width>120</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Turn off</string>
+      </property>
+     </widget>
      <widget class="QPushButton" name="setAboutButn">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>200</y>
+        <y>140</y>
         <width>120</width>
-        <height>120</height>
+        <height>80</height>
        </rect>
       </property>
       <property name="text">
@@ -873,8 +892,20 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="messageLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>450</y>
+      <width>730</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

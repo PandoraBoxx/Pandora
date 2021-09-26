@@ -153,7 +153,7 @@ template <class T> QVector<qreal> getBufferLevels(const T *buffer, int frames, i
 void SoundManager::updateProgress(qint64 duration)
 {
     if (m_qAudioRecorder->error() != QMediaRecorder::NoError || duration < 2000) return;
-    m_gui->statusBar->showMessage(tr("Recorded %1 sec").arg(duration / 1000));
+    m_gui->messageLabel->setText(tr("Recorded %1 sec").arg(duration / 1000));
 }
 
 void SoundManager::updateStatus(QMediaRecorder::Status status)
@@ -178,7 +178,7 @@ void SoundManager::updateStatus(QMediaRecorder::Status status)
     }
 
     if (m_qAudioRecorder->error() == QMediaRecorder::NoError)
-        m_gui->statusBar->showMessage(statusMessage);
+        m_gui->messageLabel->setText(statusMessage);
 }
 
 void SoundManager::onStateChanged(QMediaRecorder::State state)
@@ -234,7 +234,7 @@ void SoundManager::togglePause()
 
 void SoundManager::displayErrorMessage()
 {
-    m_gui->statusBar->showMessage(m_qAudioRecorder->errorString());
+    m_gui->messageLabel->setText(m_qAudioRecorder->errorString());
 }
 
 void SoundManager::clearAudioLevels()

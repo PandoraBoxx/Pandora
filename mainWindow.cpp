@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget* parent) :
 {
     m_gui->setupUi(this);
     setWindowTitle("Pandora");
+    Qt::WindowFlags flags;
+    flags |= Qt::FramelessWindowHint;
+    flags |= Qt::MSWindowsFixedSizeDialogHint;
+    setWindowFlags(flags);
 
     m_encryptTool = new EncryptTool(this);
     m_serialSettings = new SerialSettings(this);
@@ -42,6 +46,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(m_gui->msgReceiveButn, SIGNAL(clicked(bool)), this, SLOT(setMessageReceiveWidget()));
     connect(m_gui->msgSendButn, SIGNAL(clicked(bool)), this, SLOT(setMessageSendWidget()));
     connect(m_gui->setSerialButn, SIGNAL(clicked(bool)), this, SLOT(setSettingSerialWidget()));
+    connect(m_gui->setOffButn, SIGNAL(clicked(bool)), this, SLOT(setSettingOffFunction()));
     connect(m_gui->setAboutButn, SIGNAL(clicked(bool)), this, SLOT(setSettingAboutWidget()));
 
     afterInit();
@@ -255,6 +260,13 @@ void MainWindow::setMessageReceiveWidget()
 void MainWindow::setMessageSendWidget()
 {
     m_gui->msgStackedWidget->setCurrentWidget(m_gui->msgSendPage);
+}
+
+void MainWindow::setSettingOffFunction()
+{
+    qApp->exit();
+//    QString file = "sudo poweroff";
+//    m_process->start(file);
 }
 
 void MainWindow::setSettingSerialWidget()

@@ -351,9 +351,9 @@ void ContactManager::remoteContactProgress(qreal length, QString type)
 {
     m_cntRemoteSizeList.at(0)->setLevel(length);
     if (length < 1.0F) {
-        m_gui->statusBar->showMessage("Receiving " + type + "...");
+        m_gui->messageLabel->setText("Receiving " + type + "...");
     } else {
-        m_gui->statusBar->showMessage(type + " Received");
+        m_gui->messageLabel->setText(type + " Received");
     }
 }
 
@@ -361,9 +361,9 @@ void ContactManager::localContactProgress(qreal length, QString type)
 {
     m_cntLocalSizeList.at(0)->setLevel(length);
     if (length < 1.0F) {
-        m_gui->statusBar->showMessage("Sending " + type + "...");
+        m_gui->messageLabel->setText("Sending " + type + "...");
     } else {
-        m_gui->statusBar->showMessage(type + " Sent");
+        m_gui->messageLabel->setText(type + " Sent");
     }
 }
 

@@ -38,6 +38,7 @@ private slots:
     void setMessageReceiveWidget();
     void setMessageSendWidget();
     void setSettingSerialWidget();
+    void setSettingOffFunction();
     void setSettingAboutWidget();
 
 private:

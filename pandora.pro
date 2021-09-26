@@ -8,7 +8,7 @@ QT       += core gui serialport sql multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = pandora11
+TARGET = pandora
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
