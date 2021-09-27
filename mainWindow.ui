@@ -134,7 +134,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="cntReceivePage">
        <widget class="QWidget" name="layoutWidget01">
@@ -316,7 +316,7 @@
        <widget class="QWidget" name="layoutWidget06_2">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>140</x>
           <y>140</y>
           <width>441</width>
           <height>41</height>
@@ -327,8 +327,8 @@
        <widget class="QLabel" name="cntSendProgressLabel">
         <property name="geometry">
          <rect>
-          <x>29</x>
-          <y>141</y>
+          <x>40</x>
+          <y>140</y>
           <width>91</width>
           <height>41</height>
          </rect>
@@ -603,7 +603,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="msgSendPage">
        <widget class="QWidget" name="layoutWidget04">
@@ -739,8 +739,8 @@
        <widget class="QLabel" name="msgRecProgressLabel">
         <property name="geometry">
          <rect>
-          <x>29</x>
-          <y>141</y>
+          <x>40</x>
+          <y>140</y>
           <width>91</width>
           <height>41</height>
          </rect>
@@ -758,7 +758,7 @@
        <widget class="QWidget" name="layoutWidget06">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>140</x>
           <y>140</y>
           <width>441</width>
           <height>41</height>

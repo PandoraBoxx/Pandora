@@ -381,12 +381,19 @@ void ContactManager::contactKeySent()
 
 void ContactManager::checkKeySent()
 {
-    m_gui->cntSendResultLabel->clear();
+    m_gui->cntSendResultLabel->setText("Ready to send the key again.");
+
     m_cntLocalSizeList.at(0)->setLevel(0);
+    m_gui->cntSendButn->setEnabled(true);
+    m_gui->msgTransmitButn->setEnabled(true);
+    m_gui->messageLabel->clear();
     m_timer->stop();
 }
 
 void ContactManager::sendPublicKey()
 {
+    m_gui->cntSendButn->setEnabled(false);
+    m_gui->msgTransmitButn->setEnabled(false);
+    m_gui->cntSendResultLabel->clear();
     m_serialInterface->sendKey();
 }

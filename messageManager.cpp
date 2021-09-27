@@ -63,6 +63,9 @@ void MessageManager::checkMsgSent()
     }
 
     m_msgLocalSizeList.at(0)->setLevel(0);
+    m_gui->msgTransmitButn->setEnabled(true);
+    m_gui->cntSendButn->setEnabled(true);
+    m_gui->messageLabel->clear();
     m_timerSend->stop();
 }
 
@@ -112,6 +115,9 @@ void MessageManager::localMessageProgress(qreal length, QString type)
 
 void MessageManager::transmitMessage()
 {
+    m_gui->msgTransmitButn->setEnabled(false);
+    m_gui->cntSendButn->setEnabled(false);
+    m_gui->msgSendResultLabel->clear();
     QString nBox = m_gui->msgNameCbBox->currentText();
     QString gBox = m_gui->msgGroupCbBox->currentText();
     QByteArray folder;
