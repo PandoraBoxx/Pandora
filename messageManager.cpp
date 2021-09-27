@@ -23,6 +23,7 @@ MessageManager::MessageManager(QObject* parent) : QObject(parent)
 
     m_baseDir = QDir::currentPath();
     m_receivingStatus = false;
+    m_sendingStatus = false;
 
     ProgressBar* msgRemoteSize = new ProgressBar(m_gui->msgReceivePage);
     m_msgRemoteSizeList.append(msgRemoteSize);
@@ -56,16 +57,14 @@ void MessageManager::messageDataSent()
 
 void MessageManager::checkMsgSent()
 {
-    if (m_gui->msgSendPage->isVisible()) {
-        m_sendingStatus = true;
-        updateContactList();
-        m_gui->msgSendResultLabel->setText("Ready to send a new message.");
-    }
+    updateContactList();
+    m_gui->msgSendResultLabel->setText("Ready to send the message.");
 
     m_msgLocalSizeList.at(0)->setLevel(0);
     m_gui->msgTransmitButn->setEnabled(true);
     m_gui->cntSendButn->setEnabled(true);
     m_gui->messageLabel->clear();
+    m_sendingStatus = false;
     m_timerSend->stop();
 }
 
@@ -83,12 +82,9 @@ void MessageManager::pageChanged()
     }
 
     if (m_gui->msgSendPage->isVisible()) {
-        m_sendingStatus = true;
-        updateContactList();
-        m_gui->msgSendResultLabel->setText("Ready to send a new message.");
-    } else {
-        if (m_sendingStatus) {
-            m_sendingStatus = false;
+        if (!m_sendingStatus) {
+            updateContactList();
+            m_gui->msgSendResultLabel->setText("Ready to send the message.");
         }
     }
 }
@@ -115,6 +111,7 @@ void MessageManager::localMessageProgress(qreal length, QString type)
 
 void MessageManager::transmitMessage()
 {
+    m_sendingStatus = true;
     m_gui->msgTransmitButn->setEnabled(false);
     m_gui->cntSendButn->setEnabled(false);
     m_gui->msgSendResultLabel->clear();

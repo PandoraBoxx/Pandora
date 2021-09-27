@@ -19,6 +19,7 @@ ContactManager::ContactManager(QObject* parent) : QObject(parent)
     m_encryptTool = m_mainWindow->getEncryptTool();
     m_serialInterface = m_mainWindow->getSerialInterface();
     m_receivingStatus = false;
+    m_sendingStatus = false;
     m_timer = new QTimer(this);
 
     m_gui->cntRecResultLabel->setWordWrap(true);
@@ -73,6 +74,11 @@ void ContactManager::pageChanged()
                 m_serialInterface->stopReceiving();
             }
             m_receivingStatus = false;
+        }
+    }
+    if (m_gui->cntSendPage->isVisible()) {
+        if (!m_sendingStatus) {
+            m_gui->cntSendResultLabel->setText("Ready to send the key.");
         }
     }
 }
@@ -381,17 +387,19 @@ void ContactManager::contactKeySent()
 
 void ContactManager::checkKeySent()
 {
-    m_gui->cntSendResultLabel->setText("Ready to send the key again.");
+    m_gui->cntSendResultLabel->setText("Ready to send the key.");
 
     m_cntLocalSizeList.at(0)->setLevel(0);
     m_gui->cntSendButn->setEnabled(true);
     m_gui->msgTransmitButn->setEnabled(true);
     m_gui->messageLabel->clear();
+    m_sendingStatus = false;
     m_timer->stop();
 }
 
 void ContactManager::sendPublicKey()
 {
+    m_sendingStatus = true;
     m_gui->cntSendButn->setEnabled(false);
     m_gui->msgTransmitButn->setEnabled(false);
     m_gui->cntSendResultLabel->clear();

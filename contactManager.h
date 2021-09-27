@@ -45,6 +45,7 @@ private:
     QList<ProgressBar*> m_cntRemoteSizeList;
     QList<ProgressBar*> m_cntLocalSizeList;
     bool m_receivingStatus;
+    bool m_sendingStatus;
 
     void updateContactList();
 };
