@@ -17,3 +17,27 @@ If you use audio be carefull not to be near to your insecure mobile phone, becau
 message if they can hear you anyway.
 
 Hope this helps
+
+First, setup the raspberrypi
+download balenaEtcher-1.5.111-x64.AppImage
+download 2021-05-07-raspios-buster-armhf-full.zip
+using Etcher setup the image on to the microSD (15min)
+plug the card into a raspberrypi with monitor and powerup
+
+once the GUI is up and running, open a terminal and run
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install qt5-default
+sudo apt-get install qtcreator
+
+Open Qtcreator and go to Help > about plugins and and untick Remote Linux
+Restart your raspberry pi
+Then go to Kits (Still inside the Build and Run) and check whether Compiler, Debugger and Qt version are set
+
+git clone https://github.com/PandoraBoxx/Pandora.git
+for a fresh install will get ERROR unknown module serialport
+sudo apt-get install libqt5serialport5-dev
+also ERROR unknown module multimedia
+sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5
+
+
