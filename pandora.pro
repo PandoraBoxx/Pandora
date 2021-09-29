@@ -32,7 +32,8 @@ SOURCES += \
     serialInterface.cpp \
     messageManager.cpp \
     progressBar.cpp \
-    soundManager.cpp
+    soundManager.cpp \
+    contactKeyboard.cpp
 
 HEADERS += \
     serialSettings.h \
@@ -42,7 +43,8 @@ HEADERS += \
     serialInterface.h \
     messageManager.h \
     progressBar.h \
-    soundManager.h
+    soundManager.h \
+    contactKeyboard.h
 
 FORMS += \
     mainWindow.ui

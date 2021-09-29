@@ -5,6 +5,7 @@
 #include "serialInterface.h"
 #include "encryptTool.h"
 #include "contactManager.h"
+#include "contactKeyboard.h"
 #include "messageManager.h"
 #include "soundManager.h"
 
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget* parent) :
     m_serialSettings = new SerialSettings(this);
     m_serialInterface = new SerialInterface(this);
     m_contactManager = new ContactManager(this);
+    m_contactKeyboard = new ContactKeyboard(this);
     m_messageManager = new MessageManager(this);
     m_soundManager = new SoundManager(this);
 
@@ -210,6 +212,11 @@ SerialInterface* MainWindow::getSerialInterface()
 ContactManager* MainWindow::getContactManager()
 {
     return m_contactManager;
+}
+
+ContactKeyboard* MainWindow::getContactKeyboard()
+{
+    return m_contactKeyboard;
 }
 
 MessageManager* MainWindow::getMessageManager()

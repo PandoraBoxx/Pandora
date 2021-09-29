@@ -8,6 +8,7 @@ class SerialSettings;
 class SerialInterface;
 class EncryptTool;
 class ContactManager;
+class ContactKeyboard;
 class MessageManager;
 class SoundManager;
 
@@ -25,6 +26,7 @@ public:
     SerialSettings* getSerialSettings();
     SerialInterface* getSerialInterface();
     ContactManager* getContactManager();
+    ContactKeyboard* getContactKeyboard();
     MessageManager* getMessageManager();
     SoundManager* getSoundManager();
 
@@ -47,6 +49,7 @@ private:
     SerialSettings* m_serialSettings = nullptr;
     SerialInterface* m_serialInterface = nullptr;
     ContactManager* m_contactManager = nullptr;
+    ContactKeyboard* m_contactKeyboard = nullptr;
     MessageManager* m_messageManager = nullptr;
     SoundManager* m_soundManager = nullptr;
 
