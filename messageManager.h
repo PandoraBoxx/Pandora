@@ -26,6 +26,7 @@ private slots:
     void transmitMessage();
     void groupSelected(int idx);
     void messageDataReceived();
+    void messageDataError();
     void messageDataSent();
     void remoteMessageProgress(qreal length, QString type);
     void localMessageProgress(qreal length, QString type);

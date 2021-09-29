@@ -30,6 +30,7 @@ private slots:
     void localContactProgress(qreal length, QString type);
     void contactKeyReceived();
     void contactKeySent();
+    void contactKeyError();
     void sendPublicKey();
 
     void pageChanged();

@@ -75,6 +75,8 @@ SerialInterface::SerialInterface(QObject* parent) : QObject(parent)
     connect(m_timer01, &QTimer::timeout, this, &SerialInterface::checkMsgSent);
     m_recvKeyState = RKState00;
     m_recvMsgState = RMState00;
+    m_lastReminder = 0;
+    m_reminderCounter = 0;
     openSerialPort();
 }
 
@@ -225,29 +227,42 @@ void SerialInterface::sendKey()
 {
     QFile fileKey(m_baseDir + "/localPub.txt");
     fileKey.open(QIODevice::ReadOnly);
-    if (!fileKey.isOpen()) {
-        qDebug() << "File localPub.txt open for read failed";
-        m_localPubcKey.clear();
-        qint32 fileSize = 0;
-        char* numPoint = reinterpret_cast<char*>(&fileSize);
-        m_serialPort->write(QByteArray("lengthOfKey:"));
-        m_serialPort->write(numPoint, 4);
-    } else {
+    if (fileKey.isOpen()) {
+
         m_localPubcKey = fileKey.readAll();
         qint32 fileSize = m_localPubcKey.size();
         char* numPoint = reinterpret_cast<char*>(&fileSize);
+
         m_serialPort->write(QByteArray("lengthOfKey:"));
         m_serialPort->write(numPoint, 4);
-        fileKey.close();
-    }
-    m_serialPort->write(QByteArray("dataOfKey:"));
-    m_serialPort->write(m_localPubcKey);
+        m_serialPort->write(QByteArray("dataOfKey:"));
+        m_serialPort->write(m_localPubcKey);
 
-    m_timer00->start(100);
+        m_lastReminder = 0;
+        m_reminderCounter = 0;
+        m_timer00->start(100);
+        fileKey.close();
+    } else {
+
+        qDebug() << "File localPub.txt open for read failed";
+        m_localPubcKey.clear();
+        emit cntSentErrorSignal();
+    }
 }
 
 void SerialInterface::checkKeySent()
 {
+    if (m_lastReminder == m_serialPort->bytesToWrite()) {
+        m_reminderCounter++;
+        if (m_reminderCounter > 10) {
+            m_serialPort->clear(QSerialPort::AllDirections);
+            emit cntSentErrorSignal();
+            m_timer00->stop();
+            return;
+        }
+    } else {
+        m_reminderCounter = 0;
+    }
     qreal unwriten = static_cast<qreal>(m_serialPort->bytesToWrite());
     qreal percent = 1.0F - (unwriten / static_cast<qreal>(m_localPubcKey.size()));
     emit cntLocalLengthSignal(percent, "Key");
@@ -255,6 +270,7 @@ void SerialInterface::checkKeySent()
         emit cntSentSignal();
         m_timer00->stop();
     }
+    m_lastReminder = m_serialPort->bytesToWrite();
 }
 
 void SerialInterface::recvMessage()
@@ -344,29 +360,42 @@ void SerialInterface::sendMessage()
 {
     QFile fileKey(m_baseDir + "/audioLocal.enc");
     fileKey.open(QIODevice::ReadOnly);
-    if (!fileKey.isOpen()) {
-        qDebug() << "File audioLocal.enc open for read failed";
-        m_localEncdMsg.clear();
-        qint32 fileSize = 0;
-        char* numPoint = reinterpret_cast<char*>(&fileSize);
-        m_serialPort->write(QByteArray("lengthOfMsg:"));
-        m_serialPort->write(numPoint, 4);
-    } else {
+    if (fileKey.isOpen()) {
+
         m_localEncdMsg = fileKey.readAll();
         qint32 fileSize = m_localEncdMsg.size();
         char* numPoint = reinterpret_cast<char*>(&fileSize);
+
         m_serialPort->write(QByteArray("lengthOfMsg:"));
         m_serialPort->write(numPoint, 4);
-        fileKey.close();
-    }
-    m_serialPort->write(QByteArray("dataOfMsg:"));
-    m_serialPort->write(m_localEncdMsg);
+        m_serialPort->write(QByteArray("dataOfMsg:"));
+        m_serialPort->write(m_localEncdMsg);
 
-    m_timer01->start(100);
+        m_lastReminder = 0;
+        m_reminderCounter = 0;
+        fileKey.close();
+        m_timer01->start(100);
+    } else {
+
+        qDebug() << "File audioLocal.enc open for read failed";
+        m_localEncdMsg.clear();
+        emit msgSentErrorSignal();
+    }
 }
 
 void SerialInterface::checkMsgSent()
 {
+    if (m_lastReminder == m_serialPort->bytesToWrite()) {
+        m_reminderCounter++;
+        if (m_reminderCounter > 10) {
+            m_serialPort->clear(QSerialPort::AllDirections);
+            emit msgSentErrorSignal();
+            m_timer01->stop();
+            return;
+        }
+    } else {
+        m_reminderCounter = 0;
+    }
     qreal unwriten = static_cast<qreal>(m_serialPort->bytesToWrite());
     qreal percent = 1.0F - (unwriten / static_cast<qreal>(m_localEncdMsg.size()));
     emit msgLocalLengthSignal(percent, "Msg");
@@ -374,4 +403,5 @@ void SerialInterface::checkMsgSent()
         emit msgSentSignal();
         m_timer01->stop();
     }
+    m_lastReminder = m_serialPort->bytesToWrite();
 }

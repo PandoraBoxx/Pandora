@@ -73,11 +73,13 @@ signals:
     void msgRemoteLengthSignal(qreal length, QString type);
     void msgSentSignal();
     void msgLocalLengthSignal(qreal length, QString type);
+    void msgSentErrorSignal();
 
     void cntReceivedSignal();
     void cntRemotLengthSignal(qreal length, QString type);
     void cntSentSignal();
     void cntLocalLengthSignal(qreal length, QString type);
+    void cntSentErrorSignal();
 
 public:
     explicit SerialInterface(QObject* parent = nullptr);
@@ -115,6 +117,8 @@ private:
     RecvMsgState m_recvMsgState;
     qint32 m_bytesToLoad;
     QString m_baseDir;
+    qint32 m_lastReminder;
+    qint32 m_reminderCounter;
 };
 
 #endif // SERIALINTERFACE_H

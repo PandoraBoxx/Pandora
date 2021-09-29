@@ -39,6 +39,7 @@ MessageManager::MessageManager(QObject* parent) : QObject(parent)
     connect(m_serialInterface, &SerialInterface::msgLocalLengthSignal, this, &MessageManager::localMessageProgress);
     connect(m_serialInterface, &SerialInterface::msgReceivedSignal, this, &MessageManager::messageDataReceived);
     connect(m_serialInterface, &SerialInterface::msgSentSignal, this, &MessageManager::messageDataSent);
+    connect(m_serialInterface, &SerialInterface::msgSentErrorSignal, this, &MessageManager::messageDataError);
     connect(m_gui->mainStackedWidget, &QStackedWidget::currentChanged, this, &MessageManager::pageChanged);
     connect(m_gui->msgStackedWidget, &QStackedWidget::currentChanged, this, &MessageManager::pageChanged);
     connect(m_timerRec, &QTimer::timeout, this, &MessageManager::checkMsgReceived);
@@ -47,6 +48,19 @@ MessageManager::MessageManager(QObject* parent) : QObject(parent)
 
 MessageManager::~MessageManager()
 {
+}
+
+void MessageManager::messageDataError()
+{
+    updateContactList();
+    m_gui->msgSendResultLabel->setText("Error in sending the last message.");
+
+    m_msgLocalSizeList.at(0)->setLevel(0);
+    m_gui->msgTransmitButn->setEnabled(true);
+    m_gui->cntSendButn->setEnabled(true);
+    m_gui->messageLabel->clear();
+    m_sendingStatus = false;
+    m_timerSend->stop();
 }
 
 void MessageManager::messageDataSent()
@@ -132,12 +146,14 @@ void MessageManager::transmitMessage()
         if (result == -1) {
             qDebug() << "Failed to load remote public key";
             if (file != nullptr) free(file);
+            messageDataError();
             return;
         }
         size_t fileLength = static_cast<unsigned int>(result);
         m_encryptTool->setRemotePublicKey(file, fileLength);
         if (file != nullptr) free(file);
     } else {
+        messageDataError();
         return;
     }
 
@@ -151,6 +167,7 @@ void MessageManager::transmitMessage()
     if (result == -1) {
         qDebug() << "Failed to load audioLocal.org data";
         if (message != nullptr) free(message);
+        messageDataError();
         return;
     }
 
@@ -172,6 +189,7 @@ void MessageManager::transmitMessage()
         if (encryptedMessage != nullptr) free(encryptedMessage);
         if (encryptedKey != nullptr)     free(encryptedKey);
         if (iv != nullptr)               free(iv);
+        messageDataError();
         return;
     }
 
@@ -189,6 +207,7 @@ void MessageManager::transmitMessage()
             if (iv != nullptr)               free(iv);
             if (sig != nullptr)              OPENSSL_free(sig);
             if (hashed != nullptr)           OPENSSL_free(hashed);
+            messageDataError();
             return;
         }
     } else {
@@ -199,6 +218,7 @@ void MessageManager::transmitMessage()
         if (iv != nullptr)               free(iv);
         if (sig != nullptr)              OPENSSL_free(sig);
         if (hashed != nullptr)           OPENSSL_free(hashed);
+        messageDataError();
         return;
     }
 
@@ -224,6 +244,7 @@ void MessageManager::transmitMessage()
         if (iv != nullptr)               free(iv);
         if (sig != nullptr)              OPENSSL_free(sig);
         if (hashed != nullptr)           OPENSSL_free(hashed);
+        messageDataError();
         return;
     } else {
         QDataStream out(&fileOut);

@@ -53,6 +53,7 @@ ContactManager::ContactManager(QObject* parent) : QObject(parent)
     connect(m_serialInterface, &SerialInterface::cntLocalLengthSignal, this, &ContactManager::localContactProgress);
     connect(m_serialInterface, &SerialInterface::cntReceivedSignal, this, &ContactManager::contactKeyReceived);
     connect(m_serialInterface, &SerialInterface::cntSentSignal, this, &ContactManager::contactKeySent);
+    connect(m_serialInterface, &SerialInterface::cntSentErrorSignal, this, &ContactManager::contactKeyError);
     connect(m_gui->mainStackedWidget, &QStackedWidget::currentChanged, this, &ContactManager::pageChanged);
     connect(m_gui->cntStackedWidget, &QStackedWidget::currentChanged, this, &ContactManager::pageChanged);
     connect(m_gui->cntSendButn, &QPushButton::clicked, this, &ContactManager::sendPublicKey);
@@ -812,6 +813,18 @@ void ContactManager::contactKeyReceived()
 {
     m_gui->cntRecResultLabel->setText("A key was received, please enter contact details.");
     m_gui->cntAcceptButn->setDisabled(false);
+}
+
+void ContactManager::contactKeyError()
+{
+    m_gui->cntSendResultLabel->setText("Error in sending the last key.");
+
+    m_cntLocalSizeList.at(0)->setLevel(0);
+    m_gui->cntSendButn->setEnabled(true);
+    m_gui->msgTransmitButn->setEnabled(true);
+    m_gui->messageLabel->clear();
+    m_sendingStatus = false;
+    m_timer->stop();
 }
 
 void ContactManager::contactKeySent()
