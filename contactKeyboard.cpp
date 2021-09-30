@@ -49,6 +49,8 @@ ContactKeyboard::ContactKeyboard(QObject* parent) : QObject(parent)
     connect(m_gui->capsButn, &QPushButton::clicked, this, &ContactKeyboard::capsFunction);
     connect(m_gui->hideButn, &QPushButton::clicked, this, &ContactKeyboard::hideFunction);
     connect(m_gui->clearButn, &QPushButton::clicked, this, &ContactKeyboard::clearFunction);
+
+    hideFunction();
 }
 
 ContactKeyboard::~ContactKeyboard()
