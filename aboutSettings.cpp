@@ -11,12 +11,10 @@ AboutSettings::AboutSettings(QObject* parent) : QObject(parent)
     m_mainWindow = reinterpret_cast<MainWindow*>(parent);
     m_gui = m_mainWindow->getGUI();
     m_encryptTool = m_mainWindow->getEncryptTool();
-    m_process1 = new QProcess(this);
-    m_process2 = new QProcess(this);
-
-    QDir mediaDir;
-    mediaDir.mkdir(QDir::homePath() + "/PandoraContacts");
-    m_baseDir = QDir::homePath() + "/PandoraContacts";
+    m_baseDir = m_mainWindow->getBaseDir();
+    m_ramdiskDir = m_mainWindow->getRamdiskDir();
+    m_decryptProcess = new QProcess(this);
+    m_encryptProcess = new QProcess(this);
 
     QPixmap aPixmap(":/img/pandora.png");
     m_gui->aboutPicLabel->setAttribute(Qt::WA_TranslucentBackground);
@@ -27,8 +25,11 @@ AboutSettings::AboutSettings(QObject* parent) : QObject(parent)
     m_gui->passwordLEdit->setValidator(validator);
 
     connect(m_gui->passwordButn, &QPushButton::clicked, this, &AboutSettings::applySettings);
-    connect(m_process1, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(loadLocalKeys(int, QProcess::ExitStatus)));
-    connect(m_process2, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(saveLocalKeys(int, QProcess::ExitStatus)));
+    connect(m_decryptProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(loadLocalKeys(int, QProcess::ExitStatus)));
+    connect(m_encryptProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(saveLocalKeys(int, QProcess::ExitStatus)));
+
+    m_gui->keyboardFrame->setParent(m_gui->setAboutPage);
+    m_gui->keyboardFrame->setGeometry(QRect(10, 10, 411, 171));
 }
 
 AboutSettings::~AboutSettings()
@@ -41,6 +42,7 @@ void AboutSettings::applySettings()
     bool exPath1, exPath2;
     QString srcfname, dstfname;
 
+    m_gui->keyboardFrame->hide();
     path1 = m_baseDir.toUtf8() + "/localPub.txt";
     path2 = m_baseDir.toUtf8() + "/localPriv.enc";;
     exPath1 = QFileInfo::exists(path1);
@@ -48,33 +50,33 @@ void AboutSettings::applySettings()
     if (exPath1 && exPath2) {
 
         srcfname = m_baseDir + "/localPub.txt";
-        dstfname = "/mnt/ramdisk/localPub.txt";
+        dstfname = m_ramdiskDir + "/localPub.txt";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QFile::copy(srcfname, dstfname);
         srcfname = m_baseDir + "/localPriv.enc";
-        dstfname = "/mnt/ramdisk/localPriv.enc";
+        dstfname = m_ramdiskDir + "/localPriv.enc";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QFile::copy(srcfname, dstfname);
 
-        dstfname = "/mnt/ramdisk/localPriv.txt";
+        dstfname = m_ramdiskDir + "/localPriv.txt";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QString passw = m_gui->passwordLEdit->text();
-        QString file = "openssl enc -d -pbkdf2 -aes-256-cbc -in /mnt/ramdisk/localPriv.enc -out /mnt/ramdisk/localPriv.txt -k " + passw;
-        m_process1->start(file);
+        QString file = "openssl enc -d -pbkdf2 -aes-256-cbc -in " + m_ramdiskDir + "/localPriv.enc -out " + m_ramdiskDir + "/localPriv.txt -k " + passw;
+        m_decryptProcess->start(file);
     } else {
 
         generateLocalKeys();
-        dstfname = "/mnt/ramdisk/localPriv.enc";
+        dstfname = m_ramdiskDir + "/localPriv.enc";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QString passw = m_gui->passwordLEdit->text();
-        QString file = "openssl enc -pbkdf2 -aes-256-cbc -in /mnt/ramdisk/localPriv.txt -out /mnt/ramdisk/localPriv.enc -k " + passw;
-        m_process2->start(file);
+        QString file = "openssl enc -pbkdf2 -aes-256-cbc -in " + m_ramdiskDir + "/localPriv.txt -out " + m_ramdiskDir + "/localPriv.enc -k " + passw;
+        m_encryptProcess->start(file);
     }
 
     int result;
     unsigned char* message = nullptr;
 
-    path1 = "/mnt/ramdisk/localPub.txt";
+    path1 = m_ramdiskDir.toUtf8() + "/localPub.txt";
     result = m_encryptTool->readFile(path1.data(), &message);
     if (result == -1) {
         qDebug() << "Failed to load localPub data";
@@ -116,7 +118,7 @@ void AboutSettings::loadLocalKeys(int retCod, QProcess::ExitStatus)
     } else {
         /* Read the local public key */
         unsigned char* file1 = nullptr;
-        path = "/mnt/ramdisk/localPub.txt";
+        path = m_ramdiskDir.toUtf8() + "/localPub.txt";
         result = m_encryptTool->readFile(path.data(), &file1);
         if (result == -1) {
             qDebug() << "Failed to load localPub.txt keys";
@@ -129,7 +131,7 @@ void AboutSettings::loadLocalKeys(int retCod, QProcess::ExitStatus)
 
         /* Read the local private key */
         unsigned char* file0 = nullptr;
-        path = "/mnt/ramdisk/localPriv.txt";
+        path = m_ramdiskDir.toUtf8() + "/localPriv.txt";
         result = m_encryptTool->readFile(path.data(), &file0);
         if (result == -1) {
             qDebug() << "Failed to load localPriv.txt keys";
@@ -144,9 +146,9 @@ void AboutSettings::loadLocalKeys(int retCod, QProcess::ExitStatus)
         if (file0 != nullptr) free(file0);
         if (file1 != nullptr) free(file1);
 
-        QFile::remove("/mnt/ramdisk/localPub.txt");
-        QFile::remove("/mnt/ramdisk/localPriv.txt");
-        QFile::remove("/mnt/ramdisk/localPriv.enc");
+        QFile::remove(m_ramdiskDir + "/localPub.txt");
+        QFile::remove(m_ramdiskDir + "/localPriv.txt");
+        QFile::remove(m_ramdiskDir + "/localPriv.enc");
 
         m_gui->selAudioButn->setEnabled(true);
         m_gui->selTextButn->setEnabled(true);
@@ -165,14 +167,14 @@ void AboutSettings::generateLocalKeys()
 {
     QByteArray path;
 
-    path = "/mnt/ramdisk/localPriv.txt";
+    path = m_ramdiskDir.toUtf8() + "/localPriv.txt";
     FILE* fd0 = fopen(path.data(), "wb");
     if(fd0 == nullptr) {
         qDebug() << "Failed to open localPriv.txt file: " << strerror(errno);
         m_mainWindow->setSettingOffFunction();
         return;
     }
-    path = "/mnt/ramdisk/localPub.txt";
+    path = m_ramdiskDir.toUtf8() + "/localPub.txt";
     FILE* fd1 = fopen(path.data(), "wb");
     if(fd1 == nullptr) {
         qDebug() << "Failed to open localPub.txt file: " << strerror(errno);
@@ -194,18 +196,18 @@ void AboutSettings::saveLocalKeys(int retCod, QProcess::ExitStatus)
     if (retCod) {
         m_mainWindow->setSettingOffFunction();
     } else {
-        QString srcfname = "/mnt/ramdisk/localPub.txt";
+        QString srcfname = m_ramdiskDir + "/localPub.txt";
         QString dstfname = m_baseDir + "/localPub.txt";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QFile::copy(srcfname, dstfname);
-        srcfname = "/mnt/ramdisk/localPriv.enc";
+        srcfname = m_ramdiskDir + "/localPriv.enc";
         dstfname = m_baseDir + "/localPriv.enc";
         if (QFile::exists(dstfname)) QFile::remove(dstfname);
         QFile::copy(srcfname, dstfname);
 
-        QFile::remove("/mnt/ramdisk/localPub.txt");
-        QFile::remove("/mnt/ramdisk/localPriv.txt");
-        QFile::remove("/mnt/ramdisk/localPriv.enc");
+        QFile::remove(m_ramdiskDir + "/localPub.txt");
+        QFile::remove(m_ramdiskDir + "/localPriv.txt");
+        QFile::remove(m_ramdiskDir + "/localPriv.enc");
 
         m_gui->selAudioButn->setEnabled(true);
         m_gui->selTextButn->setEnabled(true);

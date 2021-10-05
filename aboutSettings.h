@@ -27,10 +27,11 @@ private:
     Ui::MainWindow* m_gui;
     MainWindow* m_mainWindow = nullptr;
     EncryptTool* m_encryptTool = nullptr;
-    QProcess* m_process1 = nullptr;
-    QProcess* m_process2 = nullptr;
+    QProcess* m_decryptProcess = nullptr;
+    QProcess* m_encryptProcess = nullptr;
 
     QString m_baseDir;
+    QString m_ramdiskDir;
     QString m_pKeyHash;
 
     void generateLocalKeys();
