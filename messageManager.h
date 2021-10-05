@@ -44,7 +44,8 @@ private:
     QTimer* m_timerRec = nullptr;
     QTimer* m_timerSend = nullptr;
 
-    QString m_baseDir;
+    QString m_contactDir;
+    QString m_ramdiskDir;
     QList<ProgressBar*> m_msgRemoteSizeList;
     QList<ProgressBar*> m_msgLocalSizeList;
     bool m_receivingStatus;

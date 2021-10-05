@@ -20,10 +20,11 @@ MessageManager::MessageManager(QObject* parent) : QObject(parent)
     m_encryptTool = m_mainWindow->getEncryptTool();
     m_serialInterface = m_mainWindow->getSerialInterface();
     m_aboutSettings = m_mainWindow->getAboutSettings();
+    m_contactDir = m_mainWindow->getContactsDir();
+    m_ramdiskDir = m_mainWindow->getRamdiskDir();
     m_timerRec = new QTimer(this);
     m_timerSend = new QTimer(this);
 
-    m_baseDir = QDir::homePath() + "/PandoraContacts";
     m_receivingStatus = false;
     m_sendingStatus = false;
 
@@ -164,7 +165,7 @@ void MessageManager::transmitMessage()
     unsigned char* message = nullptr;
     QByteArray path;
 
-    path = "/mnt/ramdisk/audioLocal.org";
+    path = m_ramdiskDir.toUtf8() + "/audioLocal.org";
     result = m_encryptTool->readFile(path.data(), &message);
     if (result == -1) {
         qDebug() << "Failed to load audioLocal.org data";
@@ -233,10 +234,10 @@ void MessageManager::transmitMessage()
     qint32 encSignLen = static_cast<qint32>(slen);
     QByteArray encSign = QByteArray::fromRawData(reinterpret_cast<const char*>(sig), encSignLen);
 
-    QFileInfo info("/mnt/ramdisk/audioLocal.org");
+    QFileInfo info(m_ramdiskDir + "/audioLocal.org");
     QByteArray fdate = info.lastModified().toString().toUtf8();
 
-    QFile fileOut("/mnt/ramdisk/audioLocal.enc");
+    QFile fileOut(m_ramdiskDir + "/audioLocal.enc");
     fileOut.open(QIODevice::WriteOnly);
     if (!fileOut.isOpen()) {
         qDebug() << "File audioLocal.enc open for write failed";
@@ -309,7 +310,7 @@ void MessageManager::messageDataReceived()
     QString contactInfo;
     qint32 encMessageLength, encKeyLength, encIvLength, encSignLen;
 
-    QFile fileIn("/mnt/ramdisk/audioRemote.enc");
+    QFile fileIn(m_ramdiskDir + "/audioRemote.enc");
     fileIn.open(QIODevice::ReadOnly);
     if (!fileIn.isOpen()) {
         qDebug() << "File audioRemote.enc open for read failed";
@@ -320,10 +321,8 @@ void MessageManager::messageDataReceived()
         fileIn.close();
     }
 
-    QDir contDir;
     QByteArray name, group, folder;
-    contDir.mkdir(m_baseDir + "/Contacts");
-    QString dstfname = m_baseDir + "/Contacts/" + contactInfo;
+    QString dstfname = m_contactDir + "/" + contactInfo;
 
     QSqlDatabase db = QSqlDatabase::database("ContactDatabase");
     QSqlQuery query(db);
@@ -365,7 +364,7 @@ void MessageManager::messageDataReceived()
     } else {
         if (m_encryptTool->computeHash(decryptedMessage, static_cast<unsigned int>(decryptedMessageLength), &hashedD, &hashedDSiz, 0)) {
             if(m_encryptTool->verifyHash(hashedD, hashedDSiz, reinterpret_cast<unsigned char*>(encSign.data()), static_cast<unsigned int>(encSignLen))) {
-                path = "/mnt/ramdisk/audioRemote.dec";
+                path = m_ramdiskDir.toUtf8() + "/audioRemote.dec";
                 result = m_encryptTool->writeFile(path.data(), reinterpret_cast<unsigned char*>(decryptedMessage), static_cast<unsigned int>(decryptedMessageLength));
                 if (result == -1) {
                     qDebug() << "Failed to write audioRemote.dec file";
