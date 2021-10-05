@@ -33,7 +33,8 @@ SOURCES += \
     messageManager.cpp \
     progressBar.cpp \
     soundManager.cpp \
-    contactKeyboard.cpp
+    contactKeyboard.cpp \
+    aboutSettings.cpp
 
 HEADERS += \
     serialSettings.h \
@@ -44,9 +45,13 @@ HEADERS += \
     messageManager.h \
     progressBar.h \
     soundManager.h \
-    contactKeyboard.h
+    contactKeyboard.h \
+    aboutSettings.h
 
 FORMS += \
     mainWindow.ui
 
 LIBS += -L/usr/local/openssl/lib -lssl -lcrypto
+
+RESOURCES += \
+    applogo.qrc
