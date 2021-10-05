@@ -1260,7 +1260,7 @@
        </widget>
       </widget>
       <widget class="QWidget" name="setAboutPage">
-       <widget class="QLabel" name="pictureLabel">
+       <widget class="QLabel" name="aboutPicLabel">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1271,6 +1271,52 @@
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="passwordLabel">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>290</y>
+          <width>160</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Encriptor Password:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="passwordLEdit">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>290</y>
+          <width>220</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="passwordButn">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>290</y>
+          <width>175</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Activate</string>
         </property>
        </widget>
       </widget>

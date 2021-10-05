@@ -11,6 +11,7 @@ class ContactManager;
 class ContactKeyboard;
 class MessageManager;
 class SoundManager;
+class AboutSettings;
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +21,6 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-    QString getOwnPKeyHash();
     Ui::MainWindow* getGUI();
     EncryptTool* getEncryptTool();
     SerialSettings* getSerialSettings();
@@ -29,6 +29,10 @@ public:
     ContactKeyboard* getContactKeyboard();
     MessageManager* getMessageManager();
     SoundManager* getSoundManager();
+    AboutSettings* getAboutSettings();
+
+public slots:
+    void setSettingOffFunction();
 
 private slots:
     void setAudioWidget();
@@ -40,7 +44,6 @@ private slots:
     void setMessageReceiveWidget();
     void setMessageSendWidget();
     void setSettingSerialWidget();
-    void setSettingOffFunction();
     void setSettingAboutWidget();
 
 private:
@@ -52,13 +55,9 @@ private:
     ContactKeyboard* m_contactKeyboard = nullptr;
     MessageManager* m_messageManager = nullptr;
     SoundManager* m_soundManager = nullptr;
-
-    QString m_baseDir;
-    QString m_pKeyHash;
+    AboutSettings* m_aboutSettings = nullptr;
 
     void afterInit();
-    void loadLocalKeys();
-    void generateLocalKeys();
 };
 
 #endif // MAINWINDOW_H

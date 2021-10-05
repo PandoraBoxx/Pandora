@@ -8,11 +8,12 @@
 #include "contactKeyboard.h"
 #include "messageManager.h"
 #include "soundManager.h"
+#include "aboutSettings.h"
 
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
-#include <QDir>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget* parent) :
     flags |= Qt::MSWindowsFixedSizeDialogHint;
     setWindowFlags(flags);
 
+    m_aboutSettings = new AboutSettings(this);
     m_encryptTool = new EncryptTool(this);
     m_serialSettings = new SerialSettings(this);
     m_serialInterface = new SerialInterface(this);
@@ -33,11 +35,16 @@ MainWindow::MainWindow(QWidget* parent) :
     m_messageManager = new MessageManager(this);
     m_soundManager = new SoundManager(this);
 
-    m_baseDir = QDir::currentPath();
-
-    QPixmap aPixmap(m_baseDir + "/../Src/pandora.png");
-    m_gui->pictureLabel->setAttribute(Qt::WA_TranslucentBackground);
-    m_gui->pictureLabel->setPixmap(aPixmap);
+    m_gui->selAudioButn->setEnabled(false);
+    m_gui->selTextButn->setEnabled(false);
+    m_gui->selContactsButn->setEnabled(false);
+    m_gui->selMessagesButn->setEnabled(false);
+    m_gui->selSettingsButn->setEnabled(false);
+    m_gui->setSerialButn->setEnabled(false);
+    m_gui->setAboutButn->setEnabled(false);
+    m_gui->passwordButn->setHidden(false);
+    m_gui->passwordLabel->setHidden(false);
+    m_gui->passwordLEdit->setHidden(false);
 
     connect(m_gui->selAudioButn, SIGNAL(clicked(bool)), this, SLOT(setAudioWidget()));
     connect(m_gui->selContactsButn, SIGNAL(clicked(bool)), this, SLOT(setContactsWidget()));
@@ -61,8 +68,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::afterInit()
 {
-    QByteArray path1, path2;
-    bool exPath1, exPath2;
     QStringList Tables;
     QSqlError err;
 
@@ -81,112 +86,6 @@ void MainWindow::afterInit()
         QSqlQuery query("", db);
         query.exec("create table ContactTable (ContactName varchar, ContactGroup varchar, ContactDir varchar, ContactDate varchar)");
     }
-
-    path1 = m_baseDir.toUtf8() + "/localPub.txt";
-    path2 = m_baseDir.toUtf8() + "/localPriv.txt";;
-    exPath1 = QFileInfo::exists(path1);
-    exPath2 = QFileInfo::exists(path2);
-    if (exPath1 && exPath2) {
-        loadLocalKeys();
-    } else {
-        generateLocalKeys();
-    }
-
-    int result;
-    unsigned char* message = nullptr;
-
-    result = m_encryptTool->readFile(path1.data(), &message);
-    if (result == -1) {
-        qDebug() << "Failed to load localPub data";
-        if (message != nullptr) free(message);
-        return;
-    }
-    size_t messageLength = static_cast<unsigned int>(result);
-    unsigned char* hashed = nullptr;
-    size_t hashedSiz = 0;
-
-    if (!m_encryptTool->computeHash(reinterpret_cast<char*>(message), messageLength, &hashed, &hashedSiz, 1)) {
-        qDebug() << "Signature failed";
-        if (message != nullptr)          free(message);
-        if (hashed != nullptr)           OPENSSL_free(hashed);
-        return;
-    }
-
-    QByteArray rfname = QByteArray::fromRawData(reinterpret_cast<const char*>(hashed), hashedSiz);
-    m_pKeyHash.clear();
-    for (int idx=0; idx<rfname.size(); idx++) {
-        int numb = rfname.at(idx) & 0xff;
-        m_pKeyHash.append(QString::number(numb, 16).toUpper());
-    }
-
-    /* Clean up */
-    if (message != nullptr)          free(message);
-    if (hashed != nullptr)           OPENSSL_free(hashed);
-}
-
-void MainWindow::loadLocalKeys()
-{
-    int result;
-    QByteArray path;
-
-    /* Read the local public key */
-    unsigned char* file1 = nullptr;
-    path = m_baseDir.toUtf8() + "/localPub.txt";
-    result = m_encryptTool->readFile(path.data(), &file1);
-    if (result == -1) {
-        qDebug() << "Failed to load localPub.txt keys";
-        if (file1 != nullptr) free(file1);
-        return;
-    }
-    size_t fileLength1 = static_cast<unsigned int>(result);
-    m_encryptTool->setLocalPublicKey(file1, fileLength1);
-
-    /* Read the local private key */
-    unsigned char* file0 = nullptr;
-    path = m_baseDir.toUtf8() + "/localPriv.txt";
-    result = m_encryptTool->readFile(path.data(), &file0);
-    if (result == -1) {
-        qDebug() << "Failed to load localPriv.txt keys";
-        if (file0 != nullptr) free(file0);
-        if (file1 != nullptr) free(file1);
-        return;
-    }
-    size_t fileLength0 = static_cast<unsigned int>(result);
-    m_encryptTool->setLocalPrivateKey(file0, fileLength0);
-
-    if (file0 != nullptr) free(file0);
-    if (file1 != nullptr) free(file1);
-}
-
-void MainWindow::generateLocalKeys()
-{
-    QString path;
-
-    path = m_baseDir + "/localPriv.txt";
-    FILE* fd0 = fopen(path.toUtf8(), "wb");
-    if(fd0 == nullptr) {
-        qDebug() << "Failed to open localPriv.txt file: " << strerror(errno);
-        return;
-    }
-    path = m_baseDir + "/localPub.txt";
-    FILE* fd1 = fopen(path.toUtf8(), "wb");
-    if(fd1 == nullptr) {
-        qDebug() << "Failed to open localPub.txt file: " << strerror(errno);
-        fclose(fd0);
-        return;
-    }
-
-    m_encryptTool->generateRsa();
-    m_encryptTool->writeKeyToFile(fd0, KEY_SERVER_PRI);
-    m_encryptTool->writeKeyToFile(fd1, KEY_SERVER_PUB);
-
-    fclose(fd0);
-    fclose(fd1);
-}
-
-QString MainWindow::getOwnPKeyHash()
-{
-    return m_pKeyHash;
 }
 
 Ui::MainWindow* MainWindow::getGUI()
@@ -227,6 +126,11 @@ MessageManager* MainWindow::getMessageManager()
 SoundManager* MainWindow::getSoundManager()
 {
     return m_soundManager;
+}
+
+AboutSettings* MainWindow::getAboutSettings()
+{
+    return m_aboutSettings;
 }
 
 void MainWindow::setAudioWidget()
@@ -271,6 +175,10 @@ void MainWindow::setMessageSendWidget()
 
 void MainWindow::setSettingOffFunction()
 {
+    QFile::remove("/mnt/ramdisk/localPub.txt");
+    QFile::remove("/mnt/ramdisk/localPriv.txt");
+    QFile::remove("/mnt/ramdisk/localPriv.enc");
+    m_contactKeyboard->disconnectQapp();
     qApp->exit();
 //    QString file = "sudo poweroff";
 //    m_process->start(file);
