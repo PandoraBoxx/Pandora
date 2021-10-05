@@ -57,6 +57,11 @@ ContactKeyboard::~ContactKeyboard()
 {
 }
 
+void ContactKeyboard::disconnectQapp()
+{
+    disconnect(qApp, &QApplication::focusChanged, this, &ContactKeyboard::focusFunction);
+}
+
 void ContactKeyboard::num0Char()
 {
     if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("0");

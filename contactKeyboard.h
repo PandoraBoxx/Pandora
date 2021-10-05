@@ -14,6 +14,8 @@ public:
     explicit ContactKeyboard(QObject* parent = nullptr);
     ~ContactKeyboard();
 
+    void disconnectQapp();
+
 private slots:
     void num0Char();
     void num1Char();
