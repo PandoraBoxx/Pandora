@@ -16,6 +16,7 @@ SoundManager::SoundManager(QObject* parent) : QObject(parent)
 {
     m_mainWindow = reinterpret_cast<MainWindow*>(parent);
     m_gui = m_mainWindow->getGUI();
+    m_ramdiskDir = m_mainWindow->getRamdiskDir();
 
     m_qAudioRecorder = new QAudioRecorder(this);
     m_process = new QProcess(this);
@@ -28,8 +29,7 @@ SoundManager::SoundManager(QObject* parent) : QObject(parent)
     connect(m_probe, &QAudioProbe::audioBufferProbed, this, &SoundManager::processBuffer);
     m_probe->setSource(m_qAudioRecorder);
 
-    m_baseDir = QDir::homePath() + "/PandoraContacts";
-    m_qAudioRecorder->setOutputLocation(QUrl::fromLocalFile("/mnt/ramdisk/audioLocal.org"));
+    m_qAudioRecorder->setOutputLocation(QUrl::fromLocalFile(m_ramdiskDir + "/audioLocal.org"));
 
     connect(m_qAudioRecorder, &QAudioRecorder::durationChanged, this, &SoundManager::updateProgress);
     connect(m_qAudioRecorder, &QAudioRecorder::statusChanged, this, &SoundManager::updateStatus);
@@ -266,8 +266,8 @@ void SoundManager::processBuffer(const QAudioBuffer& buffer)
 void SoundManager::playAudio()
 {
     QString fname;
-    if (m_gui->audSourceCBox->isChecked()) fname = "/mnt/ramdisk/audioRemote.dec";
-    else fname = "/mnt/ramdisk/audioLocal.org";
+    if (m_gui->audSourceCBox->isChecked()) fname = m_ramdiskDir + "/audioRemote.dec";
+    else fname = m_ramdiskDir + "/audioLocal.org";
     QString file = "mplayer " + fname;
     m_process->start(file);
 }

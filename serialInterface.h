@@ -117,6 +117,7 @@ private:
     RecvMsgState m_recvMsgState;
     qint32 m_bytesToLoad;
     QString m_baseDir;
+    QString m_ramdiskDir;
     qint32 m_lastReminder;
     qint32 m_reminderCounter;
 };

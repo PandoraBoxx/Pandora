@@ -39,8 +39,8 @@ private:
     QAudioProbe* m_probe = nullptr;
     QProcess* m_process = nullptr;
 
+    QString m_ramdiskDir;
     QList<ProgressBar*> m_vumeterList;
-    QString m_baseDir;
 
     void clearAudioLevels();
 };
