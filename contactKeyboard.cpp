@@ -64,361 +64,366 @@ void ContactKeyboard::disconnectQapp()
 
 void ContactKeyboard::num0Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("0");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("0");
+    QString number = "0";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num1Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("1");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("1");
+    QString number = "1";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num2Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("2");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("2");
+    QString number = "2";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num3Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("3");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("3");
+    QString number = "3";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num4Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("4");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("4");
+    QString number = "4";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num5Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("5");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("5");
+    QString number = "5";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num6Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("6");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("6");
+    QString number = "6";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num7Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("7");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("7");
+    QString number = "7";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num8Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("8");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("8");
+    QString number = "8";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::num9Char()
 {
-    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("9");
-    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("9");
+    QString number = "9";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(number);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(number);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(number);
 }
 
 void ContactKeyboard::letterAChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("A");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("A");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("a");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("a");
-    }
+    QString letter = "a";
+    if (m_capsLock) letter = "A";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterBChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("B");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("B");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("b");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("b");
-    }
+    QString letter = "b";
+    if (m_capsLock) letter = "B";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterCChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("C");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("C");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("c");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("c");
-    }
+    QString letter = "c";
+    if (m_capsLock) letter = "C";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterDChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("D");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("D");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("d");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("d");
-    }
+    QString letter = "d";
+    if (m_capsLock) letter = "D";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterEChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("E");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("E");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("e");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("e");
-    }
+    QString letter = "e";
+    if (m_capsLock) letter = "E";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterFChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("F");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("F");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("f");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("f");
-    }
+    QString letter = "f";
+    if (m_capsLock) letter = "F";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterGChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("G");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("G");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("g");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("g");
-    }
+    QString letter = "g";
+    if (m_capsLock) letter = "G";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterHChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("H");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("H");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("h");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("h");
-    }
+    QString letter = "h";
+    if (m_capsLock) letter = "H";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterIChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("I");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("I");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("i");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("i");
-    }
+    QString letter = "i";
+    if (m_capsLock) letter = "I";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterJChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("J");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("J");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("j");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("j");
-    }
+    QString letter = "j";
+    if (m_capsLock) letter = "J";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterKChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("K");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("K");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("k");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("k");
-    }
+    QString letter = "k";
+    if (m_capsLock) letter = "K";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterLChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("L");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("L");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("l");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("l");
-    }
+    QString letter = "l";
+    if (m_capsLock) letter = "L";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterMChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("M");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("M");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("m");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("m");
-    }
+    QString letter = "m";
+    if (m_capsLock) letter = "M";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterNChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("N");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("N");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("n");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("n");
-    }
+    QString letter = "n";
+    if (m_capsLock) letter = "N";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterOChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("O");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("O");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("o");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("o");
-    }
+    QString letter = "o";
+    if (m_capsLock) letter = "O";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterPChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("P");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("P");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("p");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("p");
-    }
+    QString letter = "p";
+    if (m_capsLock) letter = "P";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterQChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("Q");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("Q");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("q");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("q");
-    }
+    QString letter = "q";
+    if (m_capsLock) letter = "Q";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterRChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("R");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("R");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("r");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("r");
-    }
+    QString letter = "r";
+    if (m_capsLock) letter = "R";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterSChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("S");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("S");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("s");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("s");
-    }
+    QString letter = "s";
+    if (m_capsLock) letter = "S";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterTChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("T");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("T");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("t");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("t");
-    }
+    QString letter = "t";
+    if (m_capsLock) letter = "T";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterUChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("U");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("U");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("u");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("u");
-    }
+    QString letter = "u";
+    if (m_capsLock) letter = "U";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterVChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("V");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("V");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("v");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("v");
-    }
+    QString letter = "v";
+    if (m_capsLock) letter = "V";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterWChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("W");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("W");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("w");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("w");
-    }
+    QString letter = "w";
+    if (m_capsLock) letter = "W";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterXChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("X");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("X");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("x");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("x");
-    }
+    QString letter = "x";
+    if (m_capsLock) letter = "X";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterYChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("Y");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("Y");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("y");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("y");
-    }
+    QString letter = "y";
+    if (m_capsLock) letter = "Y";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterZChar()
 {
-    if (m_capsLock) {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("Z");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("Z");
-    } else {
-        if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert("z");
-        else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert("z");
-    }
+    QString letter = "z";
+    if (m_capsLock) letter = "Z";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::letterSpace()
 {
-    if (m_gui->cntNameLEdit->hasFocus())
-        m_gui->cntNameLEdit->insert(" ");
-    else if (m_gui->cntGroupLEdit->hasFocus())
-        m_gui->cntGroupLEdit->insert(" ");
+    QString letter = " ";
+
+    if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->insert(letter);
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->insert(letter);
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->insert(letter);
 }
 
 void ContactKeyboard::focusFunction(QWidget*, QWidget* now)
 {
-    if (now == m_gui->cntNameLEdit || now == m_gui->cntGroupLEdit) m_gui->keyboardFrame->show();
+    if (now == m_gui->cntNameLEdit || now == m_gui->cntGroupLEdit || now == m_gui->passwordLEdit) m_gui->keyboardFrame->show();
 }
 
 void ContactKeyboard::capsFunction()
@@ -444,12 +449,13 @@ void ContactKeyboard::capsFunction()
 
 void ContactKeyboard::hideFunction()
 {
-    m_gui->keyboardFrame->hide();
+    if (!m_gui->passwordLEdit->hasFocus()) m_gui->keyboardFrame->hide();
 }
 
 void ContactKeyboard::clearFunction()
 {
     if (m_gui->cntNameLEdit->hasFocus()) m_gui->cntNameLEdit->clear();
-    if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->clear();
+    else if (m_gui->cntGroupLEdit->hasFocus()) m_gui->cntGroupLEdit->clear();
+    else if (m_gui->passwordLEdit->hasFocus()) m_gui->passwordLEdit->clear();
 }
 
