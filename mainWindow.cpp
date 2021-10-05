@@ -14,6 +14,7 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QFile>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
@@ -25,6 +26,16 @@ MainWindow::MainWindow(QWidget* parent) :
     flags |= Qt::FramelessWindowHint;
     flags |= Qt::MSWindowsFixedSizeDialogHint;
     setWindowFlags(flags);
+
+    QDir mediaDir;
+    mediaDir.mkdir(QDir::homePath() + "/PandoraContacts");
+    m_baseDir = QDir::homePath() + "/PandoraContacts";
+
+    QDir contDir;
+    contDir.mkdir(m_baseDir + "/Contacts");
+    m_contactDir = m_baseDir + "/Contacts";
+
+    m_ramdiskDir = "/mnt/ramdisk";
 
     m_aboutSettings = new AboutSettings(this);
     m_encryptTool = new EncryptTool(this);
@@ -72,7 +83,7 @@ void MainWindow::afterInit()
     QSqlError err;
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "ContactDatabase");
-    db.setDatabaseName("ContactDatabase");
+    db.setDatabaseName(m_baseDir + "/ContactDatabase");
     db.setHostName("");
     db.setPort(-1);
     if (!db.open("", "")) {
@@ -91,6 +102,21 @@ void MainWindow::afterInit()
 Ui::MainWindow* MainWindow::getGUI()
 {
     return m_gui;
+}
+
+QString MainWindow::getBaseDir()
+{
+    return m_baseDir;
+}
+
+QString MainWindow::getContactsDir()
+{
+    return m_contactDir;
+}
+
+QString MainWindow::getRamdiskDir()
+{
+    return m_ramdiskDir;
 }
 
 EncryptTool* MainWindow::getEncryptTool()
@@ -175,9 +201,9 @@ void MainWindow::setMessageSendWidget()
 
 void MainWindow::setSettingOffFunction()
 {
-    QFile::remove("/mnt/ramdisk/localPub.txt");
-    QFile::remove("/mnt/ramdisk/localPriv.txt");
-    QFile::remove("/mnt/ramdisk/localPriv.enc");
+    QFile::remove(m_ramdiskDir + "/localPub.txt");
+    QFile::remove(m_ramdiskDir + "/localPriv.txt");
+    QFile::remove(m_ramdiskDir + "/localPriv.enc");
     m_contactKeyboard->disconnectQapp();
     qApp->exit();
 //    QString file = "sudo poweroff";

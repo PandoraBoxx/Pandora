@@ -30,6 +30,9 @@ public:
     MessageManager* getMessageManager();
     SoundManager* getSoundManager();
     AboutSettings* getAboutSettings();
+    QString getBaseDir();
+    QString getContactsDir();
+    QString getRamdiskDir();
 
 public slots:
     void setSettingOffFunction();
@@ -56,6 +59,10 @@ private:
     MessageManager* m_messageManager = nullptr;
     SoundManager* m_soundManager = nullptr;
     AboutSettings* m_aboutSettings = nullptr;
+
+    QString m_baseDir;
+    QString m_contactDir;
+    QString m_ramdiskDir;
 
     void afterInit();
 };
