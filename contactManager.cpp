@@ -28,7 +28,7 @@ ContactManager::ContactManager(QObject* parent) : QObject(parent)
     m_gui->cntNameLEdit->setDisabled(true);
     m_gui->cntGroupLEdit->setDisabled(true);
     m_gui->cntAcceptButn->setDisabled(true);
-    QRegularExpression rxv1("[A-Za-z0-9][A-Za-z0-9 ]{0,15}");
+    QRegularExpression rxv1("[A-Za-z0-9][A-Za-z0-9 ]{0,16}");
     QRegularExpression rxv2("[A-Za-z0-9]{0,16}");
     QValidator* validator1 = new QRegularExpressionValidator(rxv1, this);
     QValidator* validator2 = new QRegularExpressionValidator(rxv2, this);
@@ -87,6 +87,7 @@ void ContactManager::pageChanged()
 
 void ContactManager::acceptContact()
 {
+    QString baseDir = QDir::homePath() + "/PandoraContacts";
     QString nBox = m_gui->cntNameCbBox->currentText();
     QString gBox = m_gui->cntGroupCbBox->currentText();
     QString group = m_gui->cntGroupLEdit->text();
@@ -113,11 +114,10 @@ void ContactManager::acceptContact()
     unsigned char* message = nullptr;
     QByteArray path;
 
-    QString baseDir = QDir::currentPath();
-    path = baseDir.toUtf8() + "/remotePubb.txt";
+    path = "/mnt/ramdisk/remotePub.txt";
     result = m_encryptTool->readFile(path.data(), &message);
     if (result == -1) {
-        m_gui->cntRecResultLabel->setText("Failed to load remotePubb data.");
+        m_gui->cntRecResultLabel->setText("Failed to load remotePub data.");
         if (message != nullptr) free(message);
 
         /************************************/
@@ -155,9 +155,9 @@ void ContactManager::acceptContact()
     }
 
     QDir contDir;
-    QString srcfname = QDir::currentPath() + "/remotePubb.txt";
-    contDir.mkdir(QDir::currentPath() + "/Contacts");
-    QString dstfname = QDir::currentPath() + "/Contacts/" + fname;
+    QString srcfname = "/mnt/ramdisk/remotePub.txt";
+    contDir.mkdir(baseDir + "/Contacts");
+    QString dstfname = baseDir + "/Contacts/" + fname;
 
     QSqlDatabase db = QSqlDatabase::database("ContactDatabase");
     QSqlQuery query(db);

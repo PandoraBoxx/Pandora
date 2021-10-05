@@ -10,6 +10,7 @@ class MainWindow;
 class EncryptTool;
 class SerialInterface;
 class ProgressBar;
+class AboutSettings;
 
 class MessageManager : public QObject
 {
@@ -39,6 +40,7 @@ private:
     MainWindow* m_mainWindow = nullptr;
     EncryptTool* m_encryptTool = nullptr;
     SerialInterface* m_serialInterface = nullptr;
+    AboutSettings* m_aboutSettings = nullptr;
     QTimer* m_timerRec = nullptr;
     QTimer* m_timerSend = nullptr;
 
