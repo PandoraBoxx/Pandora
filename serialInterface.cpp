@@ -65,7 +65,7 @@ SerialInterface::SerialInterface(QObject* parent) : QObject(parent)
     m_timer00 = new QTimer(this);
     m_timer01 = new QTimer(this);
 
-    m_baseDir = QDir::currentPath();
+    m_baseDir = QDir::homePath() + "/PandoraContacts";
     connect(this, &SerialInterface::recvKeySignal, this, &SerialInterface::recvKeySMac);
     connect(this, &SerialInterface::recvMsgSignal, this, &SerialInterface::recvMsgSMac);
     connect(m_serialSettings, &SerialSettings::serialApplied, this, &SerialInterface::openSerialPort);
@@ -209,10 +209,10 @@ void SerialInterface::recvKeySMac()
             m_recvKeyState = RKState04;
             return;
         } else {
-            QFile file(m_baseDir + "/remotePubb.txt");
+            QFile file("/mnt/ramdisk/remotePub.txt");
             file.open(QIODevice::WriteOnly);
             if (!file.isOpen()) {
-                qDebug() << "File remotePubb.txt open for write failed";
+                qDebug() << "File remotePub.txt open for write failed";
             } else {
                 file.write(m_loadedData.data(), m_bytesToLoad);
                 file.close();
@@ -342,7 +342,7 @@ void SerialInterface::recvMsgSMac()
             m_recvMsgState = RMState04;
             return;
         } else {
-            QFile file(m_baseDir + "/audioRemote.enc");
+            QFile file("/mnt/ramdisk/audioRemote.enc");
             file.open(QIODevice::WriteOnly);
             if (!file.isOpen()) {
                 qDebug() << "File audioRemote.enc open for write failed";
@@ -358,7 +358,7 @@ void SerialInterface::recvMsgSMac()
 
 void SerialInterface::sendMessage()
 {
-    QFile fileKey(m_baseDir + "/audioLocal.enc");
+    QFile fileKey("/mnt/ramdisk/audioLocal.enc");
     fileKey.open(QIODevice::ReadOnly);
     if (fileKey.isOpen()) {
 
