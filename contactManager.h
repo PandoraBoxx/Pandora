@@ -43,6 +43,8 @@ private:
     SerialInterface* m_serialInterface = nullptr;
     QTimer* m_timer = nullptr;
 
+    QString m_contactDir;
+    QString m_ramdiskDir;
     QList<ProgressBar*> m_cntRemoteSizeList;
     QList<ProgressBar*> m_cntLocalSizeList;
     bool m_receivingStatus;

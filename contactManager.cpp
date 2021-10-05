@@ -18,6 +18,8 @@ ContactManager::ContactManager(QObject* parent) : QObject(parent)
     m_gui = m_mainWindow->getGUI();
     m_encryptTool = m_mainWindow->getEncryptTool();
     m_serialInterface = m_mainWindow->getSerialInterface();
+    m_contactDir = m_mainWindow->getContactsDir();
+    m_ramdiskDir = m_mainWindow->getRamdiskDir();
     m_receivingStatus = false;
     m_sendingStatus = false;
 
@@ -66,6 +68,9 @@ ContactManager::~ContactManager()
 void ContactManager::pageChanged()
 {
     if (m_gui->cntReceivePage->isVisible()) {
+        m_gui->keyboardFrame->setParent(m_gui->cntReceivePage);
+        m_gui->keyboardFrame->setGeometry(QRect(10, 160, 411, 171));
+
         m_serialInterface->recvKey();
         m_receivingStatus = true;
         updateContactList();
@@ -87,7 +92,6 @@ void ContactManager::pageChanged()
 
 void ContactManager::acceptContact()
 {
-    QString baseDir = QDir::homePath() + "/PandoraContacts";
     QString nBox = m_gui->cntNameCbBox->currentText();
     QString gBox = m_gui->cntGroupCbBox->currentText();
     QString group = m_gui->cntGroupLEdit->text();
@@ -114,7 +118,7 @@ void ContactManager::acceptContact()
     unsigned char* message = nullptr;
     QByteArray path;
 
-    path = "/mnt/ramdisk/remotePub.txt";
+    path = m_ramdiskDir.toUtf8() + "/remotePub.txt";
     result = m_encryptTool->readFile(path.data(), &message);
     if (result == -1) {
         m_gui->cntRecResultLabel->setText("Failed to load remotePub data.");
@@ -154,10 +158,8 @@ void ContactManager::acceptContact()
         fname.append(QString::number(numb, 16).toUpper());
     }
 
-    QDir contDir;
-    QString srcfname = "/mnt/ramdisk/remotePub.txt";
-    contDir.mkdir(baseDir + "/Contacts");
-    QString dstfname = baseDir + "/Contacts/" + fname;
+    QString srcfname = m_ramdiskDir + "/remotePub.txt";
+    QString dstfname = m_contactDir + "/" + fname;
 
     QSqlDatabase db = QSqlDatabase::database("ContactDatabase");
     QSqlQuery query(db);
