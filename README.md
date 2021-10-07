@@ -11,7 +11,7 @@ microphone and camera, and harvesting information from apps. The spyware is name
 of Greek mythology. It is a Trojan horse computer virus that can be sent "flying through the air" to infect cell phones."
 
 ## Motivation
-Privacy protection is the paramount for freedom.
+Privacy protection is the paramount of freedom.
 The idea is to generate all important messages (audio, text) on an external secure <b>"unconnected"</b> portable device,
 encrypt and sign them with RSA asymmetric keys, and then transmit them to your insecure personal computer or mobile phone
 which will ultimately transmit the messages to the recipients.
@@ -31,7 +31,7 @@ at the OS level. This means that it will be very difficult to attack remotely.
 Obviously, it is still possible to exfiltrate data through this channel, provided that the system is already compromised, but it
 will be very difficult to get command execution through this channel alone.
 At the same time Wireless connectivity is desirable, for usability reasons and because a mobile phone App support will be much
-easier to develop and portable.
+easier to develop and the code will be portable.
 Therefore a WIFI capable microcontroller like the [ESP32](https://www.espressif.com/en/products/socs/esp32) which can receive AT
 commands through the UART is to be used.
 Because the [ESP32](https://www.espressif.com/en/products/socs/esp32) processor will be in the middle, compromising this WIFI
@@ -40,8 +40,21 @@ All the other OS functionalities (WIFI, BLE, USB, LAN) will be disabled at the O
 
 ## Attack Scenarios
 Remote attacks are not the only possible threats. The main board to be used is a Raspberry Pi [See the blog](https://cybersecminds.blogspot.com/)
-and the OS will be Raspbian. If the device is ever stolen or seized by an untrusted party the privacy will be compromised.
-First of all, all the messages on the SDD card
+and the OS will be Raspbian. If the pandora is ever stolen or seized by an untrusted party the privacy will be compromised.
+First of all a [Raspberry Pi](https://www.raspberrypi.org/) board uses a micro SD card as a media to hold the OS, all the messages and the
+private key on the SD card shall be encrypted. All unencrypted messages will be kept on RAM therefore just a power off will whipe the unencrypted
+data (the frozen data attack is possible here but very difficult).
+
+## Future improvements
+Another nasty attack scenario is, the device being stolen, in the meantime the SD card being poisoned with malware and then returned without
+knowledge of the owner. In the future there will be a system signature check functionality to avoid this scenario.
+Also a panic button will be added, for now the private key is encrypted on the SD card, but somebody with resources might try to attack it,
+wipe the SD card is a time consuming operation and there is a [wear leveling](https://en.wikipedia.org/wiki/Wear_leveling) functionality
+which makes difficult to be sure that the data is really wiped.
+To avoid this problem the encrypted private key will be moved to an [EEPROM](https://en.wikipedia.org/wiki/EEPROM) under the microcontroller
+domain which can wipe the data in milliseconds.
+For now the only devices supported to receive encrypted messages are computers through the UART (Windows or Linux), in the near future
+Android phones will be supported, iOS will not be supported.
 
 Hope this helps
 
