@@ -111,4 +111,9 @@ git clone https://github.com/PandoraBoxx/Pandora.git
 <li>For a fresh install it is possible to get some errors like "unknown module" in that case install the appropriate module.</li>
 </ul>
 
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
 
