@@ -41,43 +41,74 @@ All the other OS functionalities (WIFI, BLE, USB, LAN) will be disabled at the O
 ## Attack Scenarios
 Remote attacks are not the only possible threats. The main board to be used is a Raspberry Pi [See the blog](https://cybersecminds.blogspot.com/)
 and the OS will be Raspbian. If the pandora is ever stolen or seized by an untrusted party the privacy will be compromised.
-First of all a [Raspberry Pi](https://www.raspberrypi.org/) board uses a micro SD card as a media to hold the OS, all the messages and the
-private key on the SD card shall be encrypted. All unencrypted messages will be kept on RAM therefore just a power off will whipe the unencrypted
-data (the frozen data attack is possible here but very difficult).
+Proposed solutions.
+<ul>
+<li>First of all a [Raspberry Pi](https://www.raspberrypi.org/) board uses a micro SD card as a media to hold the OS, all the messages and the
+private key on the SD card shall be encrypted.</li>
+<li>All unencrypted messages will be kept on RAM therefore just a power off will whipe the unencrypted
+data (the frozen data attack is possible here but very difficult).</li>
+</ul>
 
 ## Future improvements
 Another nasty attack scenario is, the device being stolen, in the meantime the SD card being poisoned with malware and then returned without
-knowledge of the owner. In the future there will be a system signature check functionality to avoid this scenario.
-Also a panic button will be added, for now the private key is encrypted on the SD card, but somebody with resources might try to attack it,
-wipe the SD card is a time consuming operation and there is a [wear leveling](https://en.wikipedia.org/wiki/Wear_leveling) functionality
-which makes difficult to be sure that the data is really wiped.
-To avoid this problem the encrypted private key will be moved to an [EEPROM](https://en.wikipedia.org/wiki/EEPROM) under the microcontroller
-domain which can wipe the data in milliseconds.
-For now the only devices supported to receive encrypted messages are computers through the UART (Windows or Linux), in the near future
-Android phones will be supported, iOS will not be supported.
+knowledge of the owner.
+Also somebody with resources might try to attack the encrypted private key on the SD card. To wipe the SD card is a time consuming operation
+and there is a [wear leveling](https://en.wikipedia.org/wiki/Wear_leveling) functionality which makes difficult to be sure that the data is
+really wiped. To avoid this problem the encrypted private key will be moved to an [EEPROM](https://en.wikipedia.org/wiki/EEPROM) under the
+microcontroller domain which can wipe the data in milliseconds.
+For the time being the only devices supported to receive encrypted messages are computers through the UART (Windows or Linux).
 
-Hope this helps
+<ul>
+<li>In the future there will be a system signature check functionality to avoid the stolen card scenario.</li>
+<li>A panic button will be added to wipe the private key, for the time being the key is encrypted on the SD card.</li>
+<li>Android phones will be supported to receive encrypted messages, iOS will not be supported.</li>
+</ul>
 
-First, setup the raspberrypi
-download balenaEtcher-1.5.111-x64.AppImage
-download 2021-05-07-raspios-buster-armhf-full.zip
-using Etcher setup the image on to the microSD (15min)
-plug the card into a raspberrypi with monitor and powerup
+I hope this project will help somebody
 
-once the GUI is up and running, open a terminal and run
+## Installation
+First, setup the Raspberry Pi.
+
+Download [balenaEtcher-1.5.111-x64.AppImage](https://www.balena.io/etcher/)
+
+Download [2021-05-07-raspios-buster-armhf-full.zip](https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-05-28/2021-05-07-raspios-buster-armhf.zip)
+<ul>
+<li>Using Etcher setup the image on to the microSD (15min).</li>
+<li>Plug the card into a raspberrypi with a proper monitor and powerup.</li>
+<li>Once the GUI is up and running, open a terminal and run the following commands:</li>
+</ul>
+
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install qt5-default
 sudo apt-get install qtcreator
-
-Open Qtcreator and go to Help > about plugins and and untick Remote Linux
-Restart your raspberry pi
-Then go to Kits (Still inside the Build and Run) and check whether Compiler, Debugger and Qt version are set
-
-git clone https://github.com/PandoraBoxx/Pandora.git
-for a fresh install will get ERROR unknown module serialport
 sudo apt-get install libqt5serialport5-dev
-also ERROR unknown module multimedia
 sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5
+```
+
+<ul>
+<li>Open Qtcreator and go to Help > about plugins and and untick Remote Linux.</li>
+<li>Restart your raspberry pi.</li>
+<li>Then go to Kits (Still inside the Build and Run) and check whether Compiler, Debugger and Qt version are set.</li>
+<li>Create a directory on user level ~/QtProjects/Pandora</li>
+<li>Run the following commands on Terminal:</li>
+</ul>
+
+```bash
+cd
+mkdir QtProjects
+cd QtProjects
+mkdir PandoraBox
+cd PandoraBox
+git clone https://github.com/PandoraBoxx/Pandora.git
+```
+
+<ul>
+<li>Setup the Qt project by starting QtCreator > File > Open File or Project...</li>
+<li>Navigate to ~/QtProjects/Pandora/pandora/pandora.pro and open it.</li>
+<li>Configurate the project, compile and run.</li>
+<li>For a fresh install it is possible to get some errors like "unknown module" in that case install the appropriate module.</li>
+</ul>
 
 
