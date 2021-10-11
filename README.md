@@ -37,6 +37,7 @@ commands through the UART is to be used.
 Because the [ESP32](https://www.espressif.com/en/products/socs/esp32) processor will be in the middle, compromising this WIFI
 channel remotely will be very difficult (and this will be the only channel).
 All the other OS functionalities (WIFI, BLE, USB, LAN) will be disabled at the OS level.
+For more info, please check the [blog](https://cybersecminds.blogspot.com/2021/10/cyber-security-mind.html).
 
 ## Attack Scenarios
 Remote attacks are not the only possible threats. The main board to be used is a Raspberry Pi [See the blog](https://cybersecminds.blogspot.com/)
