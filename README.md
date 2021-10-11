@@ -104,6 +104,20 @@ cd PandoraBox
 git clone https://github.com/PandoraBoxx/Pandora.git
 ```
 
+Now, temporarily create a ram disk for the un-encrypted files.
+In the future the SD card will be made read only, except when new contacts come along or
+when we want to store some encrypted messages on the SD card, or the solution might be
+something different altogether. This is to avoid the SD card to wear out.
+
+```bash
+nano /etc/fstab 
+```
+Add the line
+
+```bash
+tmpfs  /mnt/ramdisk  tmpfs  rw,size=50M  0   0
+```
+
 <ul>
 <li>Setup the Qt project by starting QtCreator > File > Open File or Project...</li>
 <li>Navigate to ~/QtProjects/Pandora/pandora/pandora.pro and open it.</li>
