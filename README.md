@@ -1,3 +1,5 @@
+![GitHub language count](https://img.shields.io/github/languages/count/PandoraBoxx/Pandora)
+
 # Pandora
 Do you want to protect yourself from Pegassus? Then use Pandora!
 
